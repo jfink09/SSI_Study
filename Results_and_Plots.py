@@ -18,7 +18,7 @@ except ImportError:
     pass
 
 data = pd.read_excel(XLSX, sheet_name="Data")
-expected = pd.read_excel(XLSX, sheet_name="Expected_results")
+#expected = pd.read_excel(XLSX, sheet_name="Expected_results")
 data = data.dropna(subset=["events1", "n1", "events2", "n2"]).reset_index(drop=True)
 data[["events1", "n1", "events2", "n2"]] = data[["events1", "n1", "events2", "n2"]].astype(int)
 print(f"{len(data)} studies loaded")
