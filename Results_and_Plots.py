@@ -941,8 +941,12 @@ plt.figure(figsize=(10, 6))
 plt.scatter(control_rate, vanco_rate, s=[3*n / 10 for n in total_n], color="steelblue", alpha=0.7)
 plt.plot([0, 12], [0, 12], "r--", alpha=0.8)          # line of no difference, equality line (y = x)
 
+# Place Chou et al. on the left of the bubble to avoid overlapping with González Ross et al.
+LABEL_LEFT = {"Chou et al., 2022"}
 for name, x, y in zip(studies, control_rate, vanco_rate):
-    plt.annotate(name, (x, y), xytext=(6, 6), textcoords="offset points", fontsize=7, fontweight='bold')
+    left = name in LABEL_LEFT
+    plt.annotate(name, (x, y), xytext=(-6 if left else 6, 6), textcoords="offset points",
+                 ha="right" if left else "left", fontsize=7, fontweight='bold')
 
 plt.xlabel("SSI rate in control group (%)")
 plt.ylabel("SSI rate in vancomycin group (%)")
