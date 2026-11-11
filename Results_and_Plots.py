@@ -382,8 +382,38 @@ print(f"Python {sys.version.split()[0]}, NumPy {numpy.__version__}, SciPy {scipy
 
 
 
+# Chou et al.: alternative vancomycin group size of 100 instead of 110
+alt = data.copy()
+alt.loc[alt.study.str.startswith("Chou"), "n1"] = 100
+yc, vc, _ = log_or(alt.events1.values, alt.n1.values, alt.events2.values, alt.n2.values)
+chou100 = meta(yc, vc)
+print(f"Chou n = 100: OR {chou100['OR']:.2f} ({chou100['lo']:.2f}–{chou100['hi']:.2f}), I² {chou100['I2']:.1f}%")
 
+# Restricted to studies not at serious risk of bias (ROBINS-I V2 moderate or RoB 2 some concerns)
+not_serious = data.study.str.startswith(("Martin", "Wang", "Han", "Chandra")).values
+rest = meta(y[not_serious], v[not_serious])
+print(f"Not at serious risk of bias ({not_serious.sum()} studies, "
+      f"{data.n1[not_serious].sum() + data.n2[not_serious].sum():,} patients): "
+      f"OR {rest['OR']:.2f} ({rest['lo']:.2f}–{rest['hi']:.2f}), I² {rest['I2']:.1f}%")
 
+# GRADE inputs
+# Share of the random-effects weight from studies at serious risk of bias
+print(f"Weight from studies at serious risk of bias: {res['re_weight'][~not_serious].sum():.1f}%")
+
+# Absolute effect with its 95% CI (pooled OR and CI applied to the pooled control risk)
+def risk_with(or_):
+    return or_ * p0 / (1 - p0 + or_ * p0)
+print(f"Risk with vancomycin {risk_with(res['OR']) * 1000:.0f} per 1,000 "
+      f"({risk_with(res['lo']) * 1000:.0f} to {risk_with(res['hi']) * 1000:.0f}); "
+      f"{(p0 - risk_with(res['OR'])) * 1000:.0f} fewer per 1,000 "
+      f"({(p0 - risk_with(res['hi'])) * 1000:.0f} to {(p0 - risk_with(res['lo'])) * 1000:.0f} fewer)")
+
+# Optimal information size: control risk p0, 25% relative risk reduction, two-sided alpha 0.05, power 80%
+p_v = p0 * 0.75
+z = stats.norm.ppf(0.975) + stats.norm.ppf(0.80)
+ois = 2 * z ** 2 * (p0 * (1 - p0) + p_v * (1 - p_v)) / (p0 - p_v) ** 2
+print(f"Optimal information size: {ois:,.0f} patients (pooled: {data.n1.sum() + data.n2.sum():,} patients, "
+      f"{data.events1.sum() + data.events2.sum()} events)")
 
 
 
