@@ -1,0 +1,39 @@
+9 studies loaded
+
+k = 9   Q = 12.27 (df = 8, p = 0.1397)
+I² = 34.8% (95% CI 0.0–70.0%)   tau² = 0.238   H = 1.238
+Pooled OR (random effects) = 0.45 (95% CI 0.25–0.80)
+95% prediction interval = 0.12–1.72
+Random-effects weights (%): {'Strom 2013': 3.8, 'Martin 2014': 17.6, 'Lee 2016': 25.6, 'Gonzalez Ross 2016': 3.7, 'Chou 2022': 3.5, 'Chandra 2022': 5.0, 'Wang 2022': 19.1, 'Choi 2024': 15.6, 'Han 2025': 6.3}
+Control risk 4.8% -> vancomycin 2.2%: 26 fewer SSIs per 1,000; NNT 39
+
+Hartung-Knapp-Sidik-Jonkman CI: 0.21–0.95
+Mantel-Haenszel OR: 0.40 (0.27–0.59)
+Lee count 29: OR 0.45 (0.25–0.81), I² 35.1%
+Martin and Lee excluded: OR 0.31 (0.13–0.76), I² 38.8%
+Leave-one-out: OR 0.38–0.51, I² 11.2–42.9%, all CIs exclude 1: True
+
+Pooled OR 0.45 (0.25-0.80); I2 34.8%; PI 0.12-1.72
+Saved forest_plot.png and forest_plot.pdf
+
+Power of Cochran's Q test, k = 9 studies, true pooled OR = 0.45
+
+true tau²   ≈ I² | analytic simulated (α=0.10) | analytic simulated (α=0.05)
+     0.05    10% |      15%        5%          |       8%        2%         
+     0.10    18% |      21%       10%          |      13%        5%         
+     0.24    35% |      37%       26%          |      26%       16%           <- observed
+     0.50    53% |      58%       49%          |      49%       39%         
+     1.00    69% |      78%       74%          |      71%       66%         
+     2.00    82% |      90%       91%          |      87%       86%         
+
+Type I error check (no true heterogeneity, tau² = 0): α=0.10: simulated 2.3%, α=0.05: simulated 0.8%
+
+Chou n = 100: OR 0.45 (0.25–0.80), I² 34.1%
+Not at serious risk of bias (4 studies, 1,473 patients): OR 0.53 (0.21–1.33), I² 42.4%
+Weight from studies at serious risk of bias: 52.1%
+Risk with vancomycin 22 per 1,000 (12 to 39); 26 fewer per 1,000 (9 to 36 fewer)
+Optimal information size: 8,769 patients (pooled: 3,766 patients, 128 events)
+
+Python 3.13.18, NumPy 2.4.6, SciPy 1.16.3, pandas 2.2.3, statsmodels 0.15.0
+
+identified 558, screened 558, excluded by title 476, by abstract 57, full texts assessed 25, excluded 15, included 10, meta-analysis 9
